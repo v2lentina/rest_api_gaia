@@ -55,6 +55,35 @@ export interface LLMResponse {
 }
 
 // ============================================
+// OpenRouter / Chat completions API types
+// ============================================
+
+export interface OpenRouterMessage {
+  role?: string;
+  content?: string;
+}
+
+export interface OpenRouterChoice {
+  index?: number;
+  message?: OpenRouterMessage;
+}
+
+export interface OpenRouterUsage {
+  prompt_tokens?: number;
+  completion_tokens?: number;
+  total_tokens?: number;
+}
+
+export interface OpenRouterResponse {
+  id?: string;
+  object?: string;
+  model?: string;
+  choices?: OpenRouterChoice[];
+  usage?: OpenRouterUsage;
+  error?: any;
+}
+
+// ============================================
 // Cache Types
 // ============================================
 

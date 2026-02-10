@@ -14,7 +14,7 @@ export class CountryController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<void> => {
+  ): Promise<ApiResponse<Country> | void> => {
     try {
       const query = (req.query.q as string) || "";
 
@@ -49,7 +49,7 @@ export class CountryController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<void> => {
+  ): Promise<ApiResponse<CountryDetails> | void> => {
     try {
       const code = req.params.code as string;
 

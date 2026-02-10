@@ -72,8 +72,42 @@ export interface CountryDetails extends RestCountriesData {
 }
 
 export type SummaryResponse = {
+  query: string;
   summary: string;
+  fromCache: boolean;
+  timestamp: string;
 };
+
+// ============================================
+// OpenRouter / Chat completions API types
+// ============================================
+
+export interface OpenRouterMessage {
+  role?: string;
+  content?: string;
+}
+
+export interface OpenRouterChoice {
+  index?: number;
+  message?: OpenRouterMessage;
+}
+
+export interface OpenRouterUsage {
+  prompt_tokens?: number;
+  completion_tokens?: number;
+  total_tokens?: number;
+}
+
+export interface OpenRouterResponse {
+  id?: string;
+  object?: string;
+  model?: string;
+  choices?: OpenRouterChoice[];
+  usage?: OpenRouterUsage;
+  error?: any;
+}
+
+// ============================================
 
 export interface ApiError {
   error: string;

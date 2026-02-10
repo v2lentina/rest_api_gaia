@@ -1,11 +1,11 @@
-import { LLMResponse } from "../types";
+import { SummaryResponse, OpenRouterResponse } from "../types/api";
 import { CountryDetails } from "../types/api";
 import { config } from "../config";
 
 export class LLMAdapter {
   private readonly apiUrl = "https://openrouter.ai/api/v1/chat/completions";
 
-  async generateSummary(data: CountryDetails): Promise<LLMResponse> {
+  async generateSummary(data: CountryDetails): Promise<SummaryResponse> {
     const prompt = `Generate a brief, informative summary about ${data.name.common}. Include key facts about its geography, population, culture, and notable characteristics. Keep it concise and engaging.`;
 
     const headers = {
@@ -39,12 +39,18 @@ export class LLMAdapter {
         );
       }
 
-      const resp = (await response.json()) as any;
+      const resp = (await response.json()) as OpenRouterResponse;
+
+      console.log("OpenRouter Response:", JSON.stringify(resp, null, 2));
+
       const summary =
         resp?.choices?.[0]?.message?.content || "No summary generated";
 
       return {
+        query: data.name.common.toLowerCase(),
         summary: summary.trim(),
+        fromCache: false,
+        timestamp: new Date().toISOString(),
       };
     } catch (error) {
       console.error("LLM API Error:", error);

@@ -2,7 +2,7 @@ import { RestCountriesAdapter } from "../adapters/restcountries.adapter";
 import { WikiDataAdapter } from "../adapters/wikidata.adapter";
 import { LLMAdapter } from "../adapters/llm.adapter";
 import { CacheService } from "./cache.service";
-import { SummaryResponse } from "../types";
+import { SummaryResponse } from "../types/api";
 import { CountryDetails } from "../types/api";
 
 export class SummaryService {

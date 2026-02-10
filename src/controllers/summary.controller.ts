@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { SummaryService } from "../services/summary.service";
-import { ApiResponse, SummaryResponse } from "../types";
+import { ApiResponse, SummaryResponse } from "../types/api";
 
 export class SummaryController {
   private summaryService: SummaryService;
@@ -13,7 +13,7 @@ export class SummaryController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<void> => {
+  ): Promise<ApiResponse<SummaryResponse> | void> => {
     try {
       const query = (req.query.q as string) || "";
 
@@ -21,7 +21,6 @@ export class SummaryController {
         res.status(400).json({
           success: false,
           error: 'Query parameter "q" is required',
-          timestamp: new Date().toISOString(),
         });
         return;
       }
@@ -31,7 +30,6 @@ export class SummaryController {
       res.status(200).json({
         success: true,
         data: result,
-        timestamp: new Date().toISOString(),
       } as ApiResponse<SummaryResponse>);
     } catch (error) {
       next(error as Error);
@@ -50,8 +48,7 @@ export class SummaryController {
         res.status(400).json({
           success: false,
           error: 'Query parameter "q" is required',
-          timestamp: new Date().toISOString(),
-        } as ApiResponse<never>);
+        });
         return;
       }
 
