@@ -50,7 +50,6 @@ export class LLMAdapter {
         query: data.name.common.toLowerCase(),
         summary: summary.trim(),
         fromCache: false,
-        timestamp: new Date().toISOString(),
       };
     } catch (error) {
       console.error("LLM API Error:", error);

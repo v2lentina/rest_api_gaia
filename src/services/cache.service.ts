@@ -1,5 +1,5 @@
 import { CacheModel } from "../database/models/cache.model";
-import { CacheEntry } from "../types";
+import { CacheEntry } from "../types/api";
 
 export class CacheService {
   /**

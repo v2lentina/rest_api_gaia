@@ -56,6 +56,8 @@ export class WikiDataAdapter {
   async fetchWikiDataByCCA3(cca3: string): Promise<WikiDataFields> {
     const headers = {
       Accept: "application/sparql-results+json",
+      "User-Agent":
+        "GaiaCountryApp/1.0 (https://github.com/yourapp; contact@yourapp.com)",
     };
 
     try {

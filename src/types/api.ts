@@ -61,6 +61,7 @@ export interface WikiDataBasicFields {
 export interface WikiDataExtendedFields {
   religions?: string[];
   ethnicGroups?: string[];
+  images?: WikipediaImage[];
 }
 
 export interface WikiDataFields
@@ -75,12 +76,15 @@ export type SummaryResponse = {
   query: string;
   summary: string;
   fromCache: boolean;
-  timestamp: string;
 };
 
-// ============================================
-// OpenRouter / Chat completions API types
-// ============================================
+export interface CacheEntry {
+  id?: number;
+  queryKey: string;
+  summary: string;
+  createdAt: number;
+  expiresAt: number;
+}
 
 export interface OpenRouterMessage {
   role?: string;
@@ -107,12 +111,15 @@ export interface OpenRouterResponse {
   error?: any;
 }
 
-// ============================================
-
-export interface ApiError {
-  error: string;
-  message?: string;
-  statusCode: number;
+export class ApiError extends Error {
+  constructor(
+    public statusCode: number,
+    message: string,
+    public details?: any
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
 }
 
 export type ApiResponse<T> =

@@ -24,7 +24,6 @@ export class SummaryService {
         query,
         summary: cached,
         fromCache: true,
-        timestamp: new Date().toISOString(),
       };
     }
 
@@ -56,7 +55,6 @@ export class SummaryService {
       query,
       summary: llmResp.summary,
       fromCache: false,
-      timestamp: new Date().toISOString(),
     };
   }
 

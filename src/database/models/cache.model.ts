@@ -1,5 +1,5 @@
 import { getDatabase } from "../db";
-import { CacheEntry } from "../../types";
+import { CacheEntry } from "../../types/api";
 import { config } from "../../config";
 
 export class CacheModel {

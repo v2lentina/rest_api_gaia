@@ -1,122 +1,122 @@
-// ============================================
-// API Response Types
-// ============================================
+// // ============================================
+// // API Response Types
+// // ============================================
 
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
-  timestamp: string;
-}
+// export interface ApiResponse<T> {
+//   success: boolean;
+//   data?: T;
+//   error?: string;
+//   timestamp: string;
+// }
 
-// ============================================
-// Public API Types (anpassen an deine APIs)
-// ============================================
+// // ============================================
+// // Public API Types (anpassen an deine APIs)
+// // ============================================
 
-export interface PublicApi1Response {
-  // TODO: Struktur von Public API 1
-  // Beispiel:
-  title: string;
-  description: string;
-  metadata?: Record<string, any>;
-}
+// export interface PublicApi1Response {
+//   // TODO: Struktur von Public API 1
+//   // Beispiel:
+//   title: string;
+//   description: string;
+//   metadata?: Record<string, any>;
+// }
 
-export interface PublicApi2Response {
-  // TODO: Struktur von Public API 2
-  // Beispiel:
-  content: string;
-  author?: string;
-  tags?: string[];
-}
+// export interface PublicApi2Response {
+//   // TODO: Struktur von Public API 2
+//   // Beispiel:
+//   content: string;
+//   author?: string;
+//   tags?: string[];
+// }
 
-// ============================================
-// Combined Data Type
-// ============================================
+// // ============================================
+// // Combined Data Type
+// // ============================================
 
-export interface CombinedApiData {
-  api1Data: PublicApi1Response;
-  api2Data: PublicApi2Response;
-  combinedAt: string;
-}
+// export interface CombinedApiData {
+//   api1Data: PublicApi1Response;
+//   api2Data: PublicApi2Response;
+//   combinedAt: string;
+// }
 
-// ============================================
-// LLM Types
-// ============================================
+// // ============================================
+// // LLM Types
+// // ============================================
 
-export interface LLMRequest {
-  prompt: string;
-  data: CombinedApiData;
-}
+// export interface LLMRequest {
+//   prompt: string;
+//   data: CombinedApiData;
+// }
 
-export interface LLMResponse {
-  summary: string;
-  model?: string;
-  tokensUsed?: number;
-}
+// export interface LLMResponse {
+//   summary: string;
+//   model?: string;
+//   tokensUsed?: number;
+// }
 
-// ============================================
-// OpenRouter / Chat completions API types
-// ============================================
+// // ============================================
+// // OpenRouter / Chat completions API types
+// // ============================================
 
-export interface OpenRouterMessage {
-  role?: string;
-  content?: string;
-}
+// export interface OpenRouterMessage {
+//   role?: string;
+//   content?: string;
+// }
 
-export interface OpenRouterChoice {
-  index?: number;
-  message?: OpenRouterMessage;
-}
+// export interface OpenRouterChoice {
+//   index?: number;
+//   message?: OpenRouterMessage;
+// }
 
-export interface OpenRouterUsage {
-  prompt_tokens?: number;
-  completion_tokens?: number;
-  total_tokens?: number;
-}
+// export interface OpenRouterUsage {
+//   prompt_tokens?: number;
+//   completion_tokens?: number;
+//   total_tokens?: number;
+// }
 
-export interface OpenRouterResponse {
-  id?: string;
-  object?: string;
-  model?: string;
-  choices?: OpenRouterChoice[];
-  usage?: OpenRouterUsage;
-  error?: any;
-}
+// export interface OpenRouterResponse {
+//   id?: string;
+//   object?: string;
+//   model?: string;
+//   choices?: OpenRouterChoice[];
+//   usage?: OpenRouterUsage;
+//   error?: any;
+// }
 
-// ============================================
-// Cache Types
-// ============================================
+// // ============================================
+// // Cache Types
+// // ============================================
 
-export interface CacheEntry {
-  id?: number;
-  queryKey: string;
-  summary: string;
-  createdAt: number;
-  expiresAt: number;
-}
+// export interface CacheEntry {
+//   id?: number;
+//   queryKey: string;
+//   summary: string;
+//   createdAt: number;
+//   expiresAt: number;
+// }
 
-// ============================================
-// Summary Response (Final API Response)
-// ============================================
+// // ============================================
+// // Summary Response (Final API Response)
+// // ============================================
 
-export interface SummaryResponse {
-  query: string;
-  summary: string;
-  fromCache: boolean;
-  timestamp: string;
-}
+// export interface SummaryResponse {
+//   query: string;
+//   summary: string;
+//   fromCache: boolean;
+//   timestamp: string;
+// }
 
-// ============================================
-// Error Types
-// ============================================
+// // ============================================
+// // Error Types
+// // ============================================
 
-export class ApiError extends Error {
-  constructor(
-    public statusCode: number,
-    message: string,
-    public details?: any
-  ) {
-    super(message);
-    this.name = "ApiError";
-  }
-}
+// export class ApiError extends Error {
+//   constructor(
+//     public statusCode: number,
+//     message: string,
+//     public details?: any
+//   ) {
+//     super(message);
+//     this.name = "ApiError";
+//   }
+// }

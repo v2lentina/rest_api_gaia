@@ -3,7 +3,6 @@ import {
   searchCountriesByName,
   getCountryByCode,
 } from "../services/country.service";
-import { ApiResponse, Country, CountryDetails } from "../types/api";
 
 export class CountryController {
   /**
@@ -14,28 +13,20 @@ export class CountryController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<ApiResponse<Country> | void> => {
+  ): Promise<void> => {
     try {
       const query = (req.query.q as string) || "";
 
       if (!query || query.trim() === "") {
         res.status(400).json({
-          success: false,
-          error: {
-            error: "Bad Request",
-            message: 'Query parameter "q" is required',
-            statusCode: 400,
-          },
-        } as ApiResponse<never>);
+          error: "Bad Request",
+          message: 'Query parameter "q" is required',
+        });
         return;
       }
 
       const countries = await searchCountriesByName(query);
-
-      res.status(200).json({
-        success: true,
-        data: countries,
-      } as ApiResponse<Country[]>);
+      res.status(200).json(countries);
     } catch (error) {
       next(error);
     }
@@ -49,28 +40,20 @@ export class CountryController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<ApiResponse<CountryDetails> | void> => {
+  ): Promise<void> => {
     try {
       const code = req.params.code as string;
 
       if (!code || code.trim().length === 0) {
         res.status(400).json({
-          success: false,
-          error: {
-            error: "Bad Request",
-            message: "Country code parameter is required",
-            statusCode: 400,
-          },
-        } as ApiResponse<never>);
+          error: "Bad Request",
+          message: "Country code parameter is required",
+        });
         return;
       }
 
       const countryDetails = await getCountryByCode(code);
-
-      res.status(200).json({
-        success: true,
-        data: countryDetails,
-      } as ApiResponse<CountryDetails>);
+      res.status(200).json(countryDetails);
     } catch (error) {
       next(error);
     }

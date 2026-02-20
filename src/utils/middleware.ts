@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ApiError } from "../types";
+import { ApiError } from "../types/api";
 
 /**
  * Global error handler middleware
@@ -14,19 +14,17 @@ export function errorHandler(
 
   if (err instanceof ApiError) {
     res.status(err.statusCode).json({
-      success: false,
-      error: err.message,
+      error: err.name,
+      message: err.message,
       details: err.details,
-      timestamp: new Date().toISOString(),
     });
     return;
   }
 
   // Unknown error
   res.status(500).json({
-    success: false,
-    error: "Internal server error",
-    timestamp: new Date().toISOString(),
+    error: "Internal Server Error",
+    message: err.message || "An unexpected error occurred",
   });
 }
 
@@ -56,13 +54,12 @@ export function requestLogger(
  * 404 handler
  */
 export function notFoundHandler(
-  _req: Request,
+  req: Request,
   res: Response,
   _next: NextFunction
 ): void {
   res.status(404).json({
-    success: false,
-    error: "Route not found",
-    timestamp: new Date().toISOString(),
+    error: "Not Found",
+    message: `Route ${req.method} ${req.path} not found`,
   });
 }

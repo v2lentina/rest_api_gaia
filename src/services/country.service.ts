@@ -1,5 +1,6 @@
 import { RestCountriesAdapter } from "../adapters/restcountries.adapter";
 import { WikiDataAdapter } from "../adapters/wikidata.adapter";
+import { WikiMediaAdapter } from "../adapters/wikimedia.adapter";
 import {
   Country,
   RestCountriesData,
@@ -9,6 +10,7 @@ import {
 
 const restCountriesAdapter = new RestCountriesAdapter();
 const wikiDataAdapter = new WikiDataAdapter();
+const wikiMediaAdapter = new WikiMediaAdapter();
 
 export const searchCountriesByName = async (
   searchTerm: string
@@ -42,8 +44,20 @@ export const getCountryByCode = async (
     throw restResult.reason;
   }
 
-  const wikiData =
+  let wikiData =
     wikiResult.status === "fulfilled" ? wikiResult.value : undefined;
+
+  // Fetch Wikipedia images if we have an enwikiTitle
+  if (wikiData?.enwikiTitle) {
+    try {
+      const images = await wikiMediaAdapter.fetchImagesByTitle(
+        wikiData.enwikiTitle
+      );
+      wikiData = { ...wikiData, images };
+    } catch (error) {
+      console.warn("Failed to fetch Wikipedia images:", error);
+    }
+  }
 
   const combined: CountryDetails = {
     ...(restResult.value as RestCountriesData),

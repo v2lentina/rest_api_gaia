@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { config } from "./config";
 import summaryRoutes from "./routes/summary.routes";
 import countryRoutes from "./routes/country.routes";
@@ -12,6 +13,7 @@ import { getDatabase, cleanupExpiredCache } from "./database/db";
 const app = express();
 
 // Middleware
+app.use(cors()); // Enable CORS for all origins
 app.use(express.json());
 app.use(requestLogger);
 
