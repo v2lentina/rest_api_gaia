@@ -7,8 +7,8 @@ export const config = {
   port: Number(process.env.PORT) || 8000,
 
   llm: {
-    apiKey: process.env.OPENROUTER_API_KEY ?? "",
-    model: process.env.LLM_MODEL ?? "openai/gpt-4",
+    apiKey: process.env.HF_TOKEN ?? "",
+    model: process.env.LLM_MODEL ?? "openai/gpt-oss-120b:fastest",
   },
 
   cache: {

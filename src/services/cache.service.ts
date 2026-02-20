@@ -51,7 +51,8 @@ export class CacheService {
    * Generate a cache key from query
    * Normalize query to ensure consistent keys
    */
-  generateKey(query: string): string {
-    return query.trim().toLowerCase();
+  generateKey(query: string, version?: string): string {
+    const normalizedQuery = query.trim().toLowerCase();
+    return version ? `${version}:${normalizedQuery}` : normalizedQuery;
   }
 }

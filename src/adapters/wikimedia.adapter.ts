@@ -12,9 +12,14 @@ async function fetchWikipediaImages(
       wikipediaTitle
     )}/links/media`;
 
+    console.log(`Fetching Wikipedia images for: "${wikipediaTitle}"`);
+    console.log(`URL: ${url}`);
+
     const response = await axios.get(url, {
       headers: {
         Accept: "application/json",
+        "User-Agent":
+          "GaiaCountryApp/1.0 (https://github.com/yourapp; contact@yourapp.com)",
       },
       timeout: 8000,
     });
@@ -27,10 +32,18 @@ async function fetchWikipediaImages(
         file.preferred?.mediatype === "DRAWING"
     );
   } catch (error) {
-    console.warn(
-      `Failed to fetch Wikipedia images for "${wikipediaTitle}":`,
-      (error as Error).message
-    );
+    if (axios.isAxiosError(error)) {
+      console.warn(
+        `Failed to fetch Wikipedia images for "${wikipediaTitle}":`,
+        error.response?.status,
+        error.response?.data
+      );
+    } else {
+      console.warn(
+        `Failed to fetch Wikipedia images for "${wikipediaTitle}":`,
+        (error as Error).message
+      );
+    }
     return [];
   }
 }

@@ -12,7 +12,8 @@ export class SummaryService {
   private cacheService = new CacheService();
 
   generateKey(query: string): string {
-    return this.cacheService.generateKey(query);
+    const promptVersion = this.llmAdapter.getPromptVersion();
+    return this.cacheService.generateKey(query, promptVersion);
   }
 
   async getSummary(query: string): Promise<SummaryResponse> {
@@ -47,15 +48,24 @@ export class SummaryService {
       wikiData,
     };
 
-    const llmResp = await this.llmAdapter.generateSummary(combined);
+    // Try to generate summary - don't cache if it fails
+    try {
+      const llmResp = await this.llmAdapter.generateSummary(combined);
 
-    this.cacheService.set(cacheKey, llmResp.summary);
+      // Only cache successful responses with actual content
+      if (llmResp.summary && llmResp.summary.trim().length > 0) {
+        this.cacheService.set(cacheKey, llmResp.summary);
+      }
 
-    return {
-      query,
-      summary: llmResp.summary,
-      fromCache: false,
-    };
+      return {
+        query,
+        summary: llmResp.summary,
+        fromCache: false,
+      };
+    } catch (error) {
+      // Don't cache errors - let the error propagate
+      throw error;
+    }
   }
 
   invalidateCache(query: string): boolean {

@@ -86,28 +86,28 @@ export interface CacheEntry {
   expiresAt: number;
 }
 
-export interface OpenRouterMessage {
+export interface HuggingFaceMessage {
   role?: string;
   content?: string;
 }
 
-export interface OpenRouterChoice {
+export interface HuggingFaceChoice {
   index?: number;
-  message?: OpenRouterMessage;
+  message?: HuggingFaceMessage;
 }
 
-export interface OpenRouterUsage {
+export interface HuggingFaceUsage {
   prompt_tokens?: number;
   completion_tokens?: number;
   total_tokens?: number;
 }
 
-export interface OpenRouterResponse {
+export interface HuggingFaceResponse {
   id?: string;
   object?: string;
   model?: string;
-  choices?: OpenRouterChoice[];
-  usage?: OpenRouterUsage;
+  choices?: HuggingFaceChoice[];
+  usage?: HuggingFaceUsage;
   error?: any;
 }
 

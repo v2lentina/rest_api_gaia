@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { SummaryService } from "../services/summary.service";
-import { ApiResponse, SummaryResponse } from "../types/api";
+import { ApiResponse } from "../types/api";
 
 export class SummaryController {
   private summaryService: SummaryService;
@@ -13,24 +13,20 @@ export class SummaryController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<ApiResponse<SummaryResponse> | void> => {
+  ): Promise<void> => {
     try {
       const query = (req.query.q as string) || "";
 
       if (!query || query.trim() === "") {
         res.status(400).json({
-          success: false,
-          error: 'Query parameter "q" is required',
+          error: "Bad Request",
+          message: 'Query parameter "q" is required',
         });
         return;
       }
 
       const result = await this.summaryService.getSummary(query);
-
-      res.status(200).json({
-        success: true,
-        data: result,
-      } as ApiResponse<SummaryResponse>);
+      res.status(200).json(result);
     } catch (error) {
       next(error as Error);
     }
