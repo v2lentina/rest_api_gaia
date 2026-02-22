@@ -5,10 +5,11 @@ const router = Router();
 const summaryController = new SummaryController();
 
 /**
- * GET /api/summary?q=...
- * Get a summary for a query (checks cache first)
+ * POST /api/summary
+ * Get a summary for a country (checks cache first)
+ * Body: { country: string }
  */
-router.get("/", summaryController.getSummary);
+router.post("/", summaryController.getSummary);
 
 /**
  * DELETE /api/summary/cache?q=...

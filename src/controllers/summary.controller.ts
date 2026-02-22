@@ -15,17 +15,17 @@ export class SummaryController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const query = (req.query.q as string) || "";
+      const { country } = req.body;
 
-      if (!query || query.trim() === "") {
+      if (!country || country.trim() === "") {
         res.status(400).json({
           error: "Bad Request",
-          message: 'Query parameter "q" is required',
+          message: 'Request body must include "country" field',
         });
         return;
       }
 
-      const result = await this.summaryService.getSummary(query);
+      const result = await this.summaryService.getSummary(country);
       res.status(200).json(result);
     } catch (error) {
       next(error as Error);
